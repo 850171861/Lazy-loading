@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<style>
+  * {
+    padding: 0;
+    margin: 0;
+  }
+
+  .image-list {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 4%;
+  }
+
+  .image-list li {
+    width: 92%;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #000;
+    margin-bottom: 10px;
+  }
+
+  .image-list li p {
+    text-align: center;
+    font-size: 20px;
+  }
+
+  .image-list li .image-item {
+    display: inline-block;
+    width: 100%;
+    height: 300px;
+    background: gray;
+  }
+</style>
+
+<body>
+  <ul class="image-list">
+    <li>
+      <img src="" class="image-item" lazyload="true"
+        data-original="https://img12.360buyimg.com/seckillcms/s144x144_jfs/t1/164263/39/15516/274452/6051cb98E05b96650/56fc5e40264f4f91.jpg!q70.jpg"
+        alt="">
+      <p>标题</p>
+    </li>
+    <li>
+      <img src="" class="image-item" lazyload="true"
+        data-original="https://img10.360buyimg.com/seckillcms/s280x280_jfs/t1/167889/20/19523/203234/60795339E8bf9cde5/8bc4380934b2675d.jpg"
+        alt="">
+      <p>标题</p>
+    </li>
+    <li>
+      <img src="" class="image-item" lazyload="true"
+        data-original="https://img14.360buyimg.com/seckillcms/s280x280_jfs/t1/137504/23/7407/105232/5f3d1e32Ec3a9598b/64332079e66a291c.jpg"
+        alt="">
+      <p>标题</p>
+
+    </li>
+    <li>
+      <img src="" class="image-item" lazyload="true"
+        data-original="https://img11.360buyimg.com/seckillcms/s280x280_jfs/t1/171016/33/5515/165245/601b5a6cE533cd773/b19a788ac97ffb52.jpg"
+        alt="">
+      <p>标题</p>
+    </li>
+    <li>
+      <img src="" class="image-item" lazyload="true"
+        data-original="https://img13.360buyimg.com/seckillcms/s260x260_jfs/t1/148340/37/11779/31221/5f92a63cE85ad567e/60b5c871df0cefd0.jpg"
+        alt="">
+      <p>标题</p>
+    </li>
+    <li>
+      <img src="" class="image-item" lazyload="true"
+        data-original="https://img10.360buyimg.com/ceco/s300x300_jfs/t1/144339/2/3458/49804/5f17b924Ea2540e77/dfc523838a686232.jpg!q70.jpg"
+        alt="">
+      <p>标题</p>
+    </li>
+    <li>
+      <img src="" class="image-item" lazyload="true"
+        data-original="https://img14.360buyimg.com/ceco/s300x300_jfs/t1/142625/26/10681/43504/5f8666feE37892e29/317e4af1178ebf8f.jpg!q70.jpg"
+        alt="">
+      <p>标题</p>
+    </li>
+    <li>
+      <img src="" class="image-item" lazyload="true"
+        data-original="https://img12.360buyimg.com/ceco/s300x300_jfs/t1/147510/35/17947/276333/5fd2e916Eb311a7ae/8965d798a4715b23.jpg!q70.jpg"
+        alt="">
+      <p>标题</p>
+    </li>
+  </ul>
+</body>
+
+<script>
+  // 获取可见高度
+  var viewHeight = document.documentElement.clientHeight;
+
+  function lazyload() {
+    // 获取img[data-original][lazyload]的所有元素:
+    var imgs = document.querySelectorAll('img[data-original][lazyload]');
+    imgs.forEach(item => {
+      // 如果imgs图片地址为空就返回
+      if (item.dataset.original == '') {
+        return;
+      }
+      // getBoundingClientRect用于获取元素相的位置。集合中有x,y,top,bottom等属性。
+      var rect = item.getBoundingClientRect();
+      // 图片的位置的bottom大于 并且 图片top小于当前可见的高度
+      if (rect.bottom >= 0 && rect.top < viewHeight) {
+        // 创建一个Image标签
+        var img = new Image();
+        // 把图片地址赋值img标签的src
+        img.src = item.dataset.original;
+        // 事件在图片加载完成后立即执行
+        img.onload = function () {
+          item.src = img.src;
+        }
+
+        item.removeAttribute('data-original');
+        item.removeAttribute('lazyload')
+      }
+    })
+  }
+  lazyload();
+  // addEventListener 监听下拉，这次调用lazyload
+  document.addEventListener('scroll', lazyload)
+</script>
+
+</html>
